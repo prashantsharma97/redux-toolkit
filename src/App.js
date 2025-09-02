@@ -1,25 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { setUser } from './apps/features/users/userSlice';
 
-function App() {
+const App = () => {
+  const dispatch = useDispatch();
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(setUser({ name, email }));
+    setName('');
+    setEmail('');
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    <form onSubmit={handleSubmit}>
+      <h2>Enter User Details</h2>
+      <input
+        type="text"
+        placeholder="Name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        required
+      />
+      <br />
+      <input
+        type="email"
+        placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        required
+      />
+      <br />
+      <button type="submit">Save</button>
+    </form>
+    </>
   );
-}
+};
 
 export default App;
